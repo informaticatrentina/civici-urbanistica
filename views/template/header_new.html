@@ -1,0 +1,60 @@
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container" id="nav-main-menu" style="padding : 0px">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="http://www.civiclinks.it/it/">
+        <img src="{{constant('THEME_URL')}}images/civiclinkslogo.png" alt="civiclinks logo" class="civiclinks-logo" height="24" width="116">
+      </a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>     
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav" id="nav-menu" style="margin:0;">
+        {% if App.session is not empty %}
+          <li class="hidden-lg"><a href="{{constant('PROFILE_URL')~App.session.user.id}}">{{ t('story','Welcome') }}:&nbsp;{{App.session.user.firstname}}&nbsp;{{App.session.user.lastname}}</a></li>
+          <li class="hidden-lg"><a href="{{constant('BASE_URL')}}logout">{{ t('story', 'Logout') }}</a></li>
+        {% else %}
+          <li class="hidden-lg"><a href="http://www.civiclinks.it/it/a/register/?network={{constant('CIVICLINKS_NETWORK_TOKEN')}}">Registrati</a></li>
+          <li class="hidden-lg login-link"><a href="#">Accedi</a></li>
+        {% endif %}
+        <li class="hidden-lg"><a href="http://www.ahref.eu/it">Fondazione &lt;ahref</a></li>
+        <li><a href="http://factchecking.civiclinks.it/it/">Factchecking</a></li>
+        <li><a href="http://timu.civiclinks.it/it/">Timu</a></li>
+        <li><a href="http://civicgrant.civiclinks.it/">Civicgrant</a></li>
+        <li class="active"><a href="http://civi.ci">Civici</a></li>
+      </ul>
+
+      <ul id="nav-login" class="nav pull-right navbar-nav visible-lg">
+        {% if App.session is not empty %}
+        <ul class="nav pull-right navbar-nav"> 
+          <li><a href="{{constant('PROFILE_URL')~App.session.user.id}}">{{  App.session.user.firstname }} {{  App.session.user.lastname }}</a></li>
+          <li id="registration"><a class="btn btn-default visible-lg btn-sm" href="{{ constant('BASE_URL')}}logout">{{ t('discussion','Logout') }}</a></li>
+          <li><a href="http://www.ahref.eu/it" class="ahref-logo"><img src="{{constant('THEME_URL')}}images/logoahref.png" alt="ahref logo"></a></li>         
+          {% else %}
+          <li id="registration"><a class="btn btn-default visible-lg btn-sm" href="http://www.civiclinks.it/it/a/register/?network={{constant('CIVICLINKS_NETWORK_TOKEN')}}">Registrati</a></li>
+          <li><a class="login-link" href="#">Accedi</a></li>
+          <li><a href="http://www.ahref.eu/it" class="ahref-logo"><img src="{{constant('THEME_URL')}}images/logoahref.png" alt="ahref logo"></a></li>    
+          {% endif %}
+        </ul>
+      </ul>
+    </div>
+  </div>
+</div>
+{% set adminUser = false %}
+{% set adminUser = isAdminUser() %}
+{% if adminUser == true %}      
+  <ul class="nav nav-tabs">
+    <li><a href="{{constant('BASE_URL')}}">Home</a></li>
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Admin <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="{{constant('BASE_URL')}}admin/discussion/list">Discussion List</a></li>
+        <li><a href="{{constant('BASE_URL')}}admin/configuration">Configuration Panel</a></li>
+      </ul>
+    </li>
+  </ul>
+{%endif%}
